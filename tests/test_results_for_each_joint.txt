@@ -1,0 +1,158 @@
+JOINT 1:
+================================================================================
+[INFO] [1779371768.726757453] [steady_state_velocity_test]: STEADY STATE VELOCITY TEST STARTED
+[INFO] [1779371768.727169784] [steady_state_velocity_test]: Joint          : arm_0_joint_1
+[INFO] [1779371768.727614641] [steady_state_velocity_test]: Cmd velocity   : 0.2 rad/s
+[INFO] [1779371768.728028723] [steady_state_velocity_test]: Duration       : 10.0 sec
+[INFO] [1779371768.728460799] [steady_state_velocity_test]: ================================================================================
+
+[INFO] [1779371769.751749235] [steady_state_velocity_test]: Initial position = 0.65408 rad
+[INFO] [1779371779.809597612] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779371779.810496894] [steady_state_velocity_test]: STEADY STATE TEST RESULTS
+[INFO] [1779371779.811437517] [steady_state_velocity_test]: ================================================================================
+[INFO] [1779371779.812329952] [steady_state_velocity_test]: Elapsed time          : 10.0561 sec
+[INFO] [1779371779.813178908] [steady_state_velocity_test]: Initial position      : 0.65408 rad
+[INFO] [1779371779.814106232] [steady_state_velocity_test]: Final position        : 2.67319 rad
+[INFO] [1779371779.814954445] [steady_state_velocity_test]: Total motion          : 2.01911 rad
+[INFO] [1779371779.815808325] [steady_state_velocity_test]: Expected motion       : 2.01122 rad
+[INFO] [1779371779.816774841] [steady_state_velocity_test]: Position error        : 0.00789 rad
+[INFO] [1779371779.817822584] [steady_state_velocity_test]: Avg velocity          : 0.20078 rad/s
+[INFO] [1779371779.818824621] [steady_state_velocity_test]: Cmd velocity          : 0.20000 rad/s
+[INFO] [1779371779.819985767] [steady_state_velocity_test]: Velocity error        : 0.00078 rad/s
+[INFO] [1779371779.820994207] [steady_state_velocity_test]: RMS velocity error    : 0.32043
+[INFO] [1779371779.822051330] [steady_state_velocity_test]: ================================================================================
+
+JOINT 2: 
+[INFO] [1779372302.905889399] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779372302.906375422] [steady_state_velocity_test]: STEADY STATE VELOCITY TEST STARTED
+[INFO] [1779372302.906769598] [steady_state_velocity_test]: Joint          : arm_0_joint_2
+[INFO] [1779372302.907169133] [steady_state_velocity_test]: Cmd velocity   : -0.1 rad/s
+[INFO] [1779372302.907583774] [steady_state_velocity_test]: Duration       : 10.0 sec
+[INFO] [1779372302.907973550] [steady_state_velocity_test]: ================================================================================
+
+[INFO] [1779372303.946995238] [steady_state_velocity_test]: Initial position = -0.24324 rad
+[INFO] [1779372313.986765067] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779372313.987490763] [steady_state_velocity_test]: STEADY STATE TEST RESULTS
+[INFO] [1779372313.988306056] [steady_state_velocity_test]: ================================================================================
+[INFO] [1779372313.989143252] [steady_state_velocity_test]: Elapsed time          : 10.0389 sec
+[INFO] [1779372313.990272675] [steady_state_velocity_test]: Initial position      : -0.24324 rad
+[INFO] [1779372313.991130548] [steady_state_velocity_test]: Final position        : -1.55947 rad
+[INFO] [1779372313.991980327] [steady_state_velocity_test]: Total motion          : -1.31623 rad
+[INFO] [1779372313.993053591] [steady_state_velocity_test]: Expected motion       : -1.00389 rad
+[INFO] [1779372313.994041196] [steady_state_velocity_test]: Position error        : -0.31233 rad
+[INFO] [1779372313.995097060] [steady_state_velocity_test]: Avg velocity          : -0.13111 rad/s
+[INFO] [1779372313.995989454] [steady_state_velocity_test]: Cmd velocity          : -0.10000 rad/s
+[INFO] [1779372313.996929068] [steady_state_velocity_test]: Velocity error        : -0.03111 rad/s
+[INFO] [1779372313.997862595] [steady_state_velocity_test]: RMS velocity error    : 0.18168
+[INFO] [1779372313.998727495] [steady_state_velocity_test]: ================================================================================
+
+JOINT 3:
+[INFO] [1779372594.871578825] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779372594.872026560] [steady_state_velocity_test]: STEADY STATE VELOCITY TEST STARTED
+[INFO] [1779372594.872433324] [steady_state_velocity_test]: Joint          : arm_0_joint_3
+[INFO] [1779372594.872867251] [steady_state_velocity_test]: Cmd velocity   : 0.1 rad/s
+[INFO] [1779372594.873327417] [steady_state_velocity_test]: Duration       : 10.0 sec
+[INFO] [1779372594.873772109] [steady_state_velocity_test]: ================================================================================
+
+[INFO] [1779372595.865961218] [steady_state_velocity_test]: Initial position = -0.21782 rad
+[INFO] [1779372605.953418189] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779372605.954419551] [steady_state_velocity_test]: STEADY STATE TEST RESULTS
+[INFO] [1779372605.955196076] [steady_state_velocity_test]: ================================================================================
+[INFO] [1779372605.955999161] [steady_state_velocity_test]: Elapsed time          : 10.0863 sec
+[INFO] [1779372605.956810255] [steady_state_velocity_test]: Initial position      : -0.21782 rad
+[INFO] [1779372605.957687585] [steady_state_velocity_test]: Final position        : 1.07521 rad
+[INFO] [1779372605.958494528] [steady_state_velocity_test]: Total motion          : 1.29303 rad
+[INFO] [1779372605.959298411] [steady_state_velocity_test]: Expected motion       : 1.00863 rad
+[INFO] [1779372605.960110427] [steady_state_velocity_test]: Position error        : 0.28440 rad
+[INFO] [1779372605.960959014] [steady_state_velocity_test]: Avg velocity          : 0.12820 rad/s
+[INFO] [1779372605.961861697] [steady_state_velocity_test]: Cmd velocity          : 0.10000 rad/s
+[INFO] [1779372605.962776025] [steady_state_velocity_test]: Velocity error        : 0.02820 rad/s
+[INFO] [1779372605.963663478] [steady_state_velocity_test]: RMS velocity error    : 0.18939
+[INFO] [1779372605.964381496] [steady_state_velocity_test]: ================================================================================
+
+JOINT 4:
+[INFO] [1779372742.458459667] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779372742.458938482] [steady_state_velocity_test]: STEADY STATE VELOCITY TEST STARTED
+[INFO] [1779372742.459346562] [steady_state_velocity_test]: Joint          : arm_0_joint_4
+[INFO] [1779372742.459760892] [steady_state_velocity_test]: Cmd velocity   : 0.1 rad/s
+[INFO] [1779372742.460154152] [steady_state_velocity_test]: Duration       : 10.0 sec
+[INFO] [1779372742.460570747] [steady_state_velocity_test]: ================================================================================
+
+[INFO] [1779372743.502465990] [steady_state_velocity_test]: Initial position = 0.22855 rad
+[INFO] [1779372753.541712478] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779372753.542241734] [steady_state_velocity_test]: STEADY STATE TEST RESULTS
+[INFO] [1779372753.542686747] [steady_state_velocity_test]: ================================================================================
+[INFO] [1779372753.543181754] [steady_state_velocity_test]: Elapsed time          : 10.0387 sec
+[INFO] [1779372753.543617815] [steady_state_velocity_test]: Initial position      : 0.22855 rad
+[INFO] [1779372753.544075451] [steady_state_velocity_test]: Final position        : 1.15857 rad
+[INFO] [1779372753.544525603] [steady_state_velocity_test]: Total motion          : 0.93002 rad
+[INFO] [1779372753.544976481] [steady_state_velocity_test]: Expected motion       : 1.00387 rad
+[INFO] [1779372753.545507587] [steady_state_velocity_test]: Position error        : -0.07386 rad
+[INFO] [1779372753.545963841] [steady_state_velocity_test]: Avg velocity          : 0.09264 rad/s
+[INFO] [1779372753.546440653] [steady_state_velocity_test]: Cmd velocity          : 0.10000 rad/s
+[INFO] [1779372753.546925022] [steady_state_velocity_test]: Velocity error        : -0.00736 rad/s
+[INFO] [1779372753.547484807] [steady_state_velocity_test]: RMS velocity error    : 0.20356
+[INFO] [1779372753.548106121] [steady_state_velocity_test]: ================================================================================
+
+JOINT 5:
+[INFO] [1779372916.418211847] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779372916.418687132] [steady_state_velocity_test]: STEADY STATE VELOCITY TEST STARTED
+[INFO] [1779372916.419068128] [steady_state_velocity_test]: Joint          : arm_0_joint_5
+[INFO] [1779372916.419604435] [steady_state_velocity_test]: Cmd velocity   : 0.1 rad/s
+[INFO] [1779372916.420044390] [steady_state_velocity_test]: Duration       : 10.0 sec
+[INFO] [1779372916.420453575] [steady_state_velocity_test]: ================================================================================
+
+[INFO] [1779372917.452801222] [steady_state_velocity_test]: Initial position = 0.24041 rad
+[INFO] [1779372927.500528574] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779372927.501169721] [steady_state_velocity_test]: STEADY STATE TEST RESULTS
+[INFO] [1779372927.501772783] [steady_state_velocity_test]: ================================================================================
+[INFO] [1779372927.502362776] [steady_state_velocity_test]: Elapsed time          : 10.0471 sec
+[INFO] [1779372927.502986106] [steady_state_velocity_test]: Initial position      : 0.24041 rad
+[INFO] [1779372927.503591626] [steady_state_velocity_test]: Final position        : 1.39979 rad
+[INFO] [1779372927.504191210] [steady_state_velocity_test]: Total motion          : 1.15937 rad
+[INFO] [1779372927.504833913] [steady_state_velocity_test]: Expected motion       : 1.00471 rad
+[INFO] [1779372927.505477799] [steady_state_velocity_test]: Position error        : 0.15466 rad
+[INFO] [1779372927.506135048] [steady_state_velocity_test]: Avg velocity          : 0.11539 rad/s
+[INFO] [1779372927.506957797] [steady_state_velocity_test]: Cmd velocity          : 0.10000 rad/s
+[INFO] [1779372927.507621675] [steady_state_velocity_test]: Velocity error        : 0.01539 rad/s
+[INFO] [1779372927.508317089] [steady_state_velocity_test]: RMS velocity error    : 0.17624
+
+JOINT 6:
+[INFO] [1779377316.379704085] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779377316.380160658] [steady_state_velocity_test]: STEADY STATE VELOCITY TEST STARTED
+[INFO] [1779377316.380587024] [steady_state_velocity_test]: Joint          : arm_0_joint_6
+[INFO] [1779377316.380970342] [steady_state_velocity_test]: Cmd velocity   : 0.1 rad/s
+[INFO] [1779377316.381378683] [steady_state_velocity_test]: Duration       : 10.0 sec
+[INFO] [1779377316.381810260] [steady_state_velocity_test]: ================================================================================
+
+[INFO] [1779377317.359528401] [steady_state_velocity_test]: Initial position = 0.23118 rad
+[INFO] [1779377327.361363922] [steady_state_velocity_test]: 
+================================================================================
+[INFO] [1779377327.362324824] [steady_state_velocity_test]: STEADY STATE TEST RESULTS
+[INFO] [1779377327.363267308] [steady_state_velocity_test]: ================================================================================
+[INFO] [1779377327.364222734] [steady_state_velocity_test]: Elapsed time          : 10.0007 sec
+[INFO] [1779377327.365040935] [steady_state_velocity_test]: Initial position      : 0.23118 rad
+[INFO] [1779377327.365876827] [steady_state_velocity_test]: Final position        : 1.12879 rad
+[INFO] [1779377327.366797166] [steady_state_velocity_test]: Total motion          : 0.89760 rad
+[INFO] [1779377327.367673799] [steady_state_velocity_test]: Expected motion       : 1.00007 rad
+[INFO] [1779377327.368561572] [steady_state_velocity_test]: Position error        : -0.10247 rad
+[INFO] [1779377327.369388982] [steady_state_velocity_test]: Avg velocity          : 0.08975 rad/s
+[INFO] [1779377327.370230352] [steady_state_velocity_test]: Cmd velocity          : 0.10000 rad/s
+[INFO] [1779377327.371069127] [steady_state_velocity_test]: Velocity error        : -0.01025 rad/s
+[INFO] [1779377327.371897330] [steady_state_velocity_test]: RMS velocity error    : 0.14172
+[INFO] [1779377327.372791567] [steady_state_velocity_test]: ================================================================================
+
+
+
+
+
