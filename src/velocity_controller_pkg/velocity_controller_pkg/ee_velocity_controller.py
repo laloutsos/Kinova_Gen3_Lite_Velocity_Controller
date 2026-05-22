@@ -49,13 +49,16 @@ class EEVelocityController(Node):
 
         if self.initialized == False: return
 
+        # [q1, q2, q3, q4, q5, q6]
         q_angles = self.latest_q_angles
 
+        # J(q)
         J = compute_jacobian(q_angles)
 
         lambda_val = 0.1
         I = np.eye(6)
 
+        # pseudo Inverse Jacobian
         J_pinv = (
             J.T @ np.linalg.inv(
                 J @ J.T +
@@ -65,6 +68,7 @@ class EEVelocityController(Node):
 
         v_ee = self.get_parameter("ee_velocity").value
 
+        # q' = J^-1 * Vee
         self.q_dot = J_pinv @ v_ee
 
         

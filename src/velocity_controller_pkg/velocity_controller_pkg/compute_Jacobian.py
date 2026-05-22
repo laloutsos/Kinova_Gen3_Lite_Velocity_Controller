@@ -11,7 +11,7 @@ q1, q2, q3, q4, q5, q6 = sp.symbols('q1 q2 q3 q4 q5 q6')
 spi = sp.pi
 
 # -------------------------------
-# DH PARAMETERS
+# DH PARAMETERS 
 # -------------------------------
 
 DH_params = []

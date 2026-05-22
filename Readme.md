@@ -124,7 +124,7 @@ Finally, when the robot moves in the direction of gravity, the motion becomes sm
   -p v5:=0.0 \
   -p v6:=0.0
     ```
-### Example for the case you want to make tests 
+### Example for the case you want to make tests (make sure that joint_velocity_controller is running)
 
 ```
 ros2 run tests_pkg steady_state_velocity_test \
@@ -134,3 +134,38 @@ ros2 run tests_pkg steady_state_velocity_test \
   -p duration:=5.0
 ```
 
+
+## INVERSE KINEMATICS
+
+For the implementation of the manipulator’s inverse kinematics, I utilized the robot’s documentation, where the exact DH parameters are provided.
+
+Denavit-Hartenberg (DH) parameters offer another convenient way to specify the reference frame
+transformations for the robot kinematic chain.
+The Classical DH parameters for the transformation between frames are defined as:
+$$
+{}^{i}T_{i+1}=\begin{pmatrix}\cos(\theta_i)&-\cos(\alpha_i)\sin(\theta_i)&\sin(\alpha_i)\sin(\theta_i)&a_i\cos(\theta_i)\\sin(\theta_i)&\cos(\alpha_i)\cos(\theta_i)&-\sin(\alpha_i)\cos(\theta_i)&a_i\sin(\theta_i)\\0&\sin(\alpha_i)&\cos(\alpha_i)&d_i\\0&0&0&1\end{pmatrix}
+
+$$
+
+
+
+## Classical DH Parameters
+The following table gives the Classical DH parameters for the robot.
+| i | αᵢ | aᵢ (mm) | dᵢ (mm) | θᵢ |
+|---|---|---|---|---|
+| 1 | π/2 | 0.0 | (128.3 + 115.0) | q₁ |
+| 2 | π | 280.0 | 30.0 | q₂ + π/2 |
+| 3 | π/2 | 0.0 | 20.0 | q₃ + π/2 |
+| 4 | π/2 | 0.0 | (140.0 + 105.0) | q₄ + π/2 |
+| 5 | π/2 | 0.0 | (28.5 + 28.5) | q₅ + π |
+| 6 | 0 | 0.0 | (105.0 + 130.0) | q₆ + π/2 |
+
+Now I can compute the Jacobian of the robot using  the code in [this script](src/velocity_controller_pkg/velocity_controller_pkg/compute_Jacobian.py). Of course, I take into account the homogeneous transformation matrix of the end effector with respect to the 6th joint, which I obtained from the robot’s documentation and included in the script.
+
+
+## Auto Joint Velocity Controller
+I kept the original joint velocity controller for experimental purposes and created an auto joint velocity controller, which subscribes to a custom topic that I created. This topic is a `float32[6]` vector named `joints_velocity` and contains the desired velocities for each joint, which are then applied to the corresponding joints. The rest logic of the node is exactly the same as the joint velocity controller.
+
+## End Effector Velocity Controller
+
+Next, I created the final node, which—using the script I mentioned before—computes the pseudoinverse Jacobian of the manipulator with respect to the end effector, based on the current joint angles of each joint. In this way, given a desired velocity $V_e$, I can compute $q' = J^{+} \cdot V_e$, and then publish the resulting joint velocities to the custom topic that I created. As a result, the end effector shoud be moving with the desired velocity. Of course, it will be better only if I manage to make the joints velocity controller better. I will be making more tests as soon as possible and update the repo.
