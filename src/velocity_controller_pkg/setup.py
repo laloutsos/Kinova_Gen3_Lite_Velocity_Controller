@@ -24,7 +24,9 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'joint_velocity_controller = velocity_controller_pkg.joint_velocity_controller:main'
+            'joint_velocity_controller = velocity_controller_pkg.joint_velocity_controller:main',
+            'ee_velocity_controller = velocity_controller_pkg.ee_velocity_controller:main',
+            'auto_joint_velocity_controller = velocity_controller_pkg.auto_joint_velocity_controller:main'
         ],
     },
 )

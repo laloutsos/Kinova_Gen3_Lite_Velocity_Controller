@@ -5,24 +5,22 @@ from rclpy.node import Node
 
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from control_msgs.msg import DynamicJointState
+from custom_jackal_interfaces.msg import JointsVelocity
 
 import numpy as np
 
 
-class JointVelocityController(Node):
+class AutoJointVelocityController(Node):
 
     def __init__(self):
 
         # constructor
-        super().__init__('joint_velocity_controller')
+        super().__init__('auto_joint_velocity_controller')
 
         # cmd_velocities
-        self.declare_parameter("v1", 0.0)
-        self.declare_parameter("v2", 0.0)
-        self.declare_parameter("v3", 0.0)
-        self.declare_parameter("v4", 0.0)
-        self.declare_parameter("v5", 0.0)
-        self.declare_parameter("v6", 0.0)
+
+        self.v = None
+
 
 
         # manipulator state
@@ -49,13 +47,22 @@ class JointVelocityController(Node):
             10
         )
 
-        # subscriber
+        # subscribers
         self.create_subscription(
             DynamicJointState,
             "/j100_0710/platform/dynamic_joint_states",
             self.initialize_q_cmd,
             10
         )
+
+        self.create_subscription(
+            JointsVelocity,
+            "/j100_0710/manipulator/joints_velocity",
+            self.joints_velocity_callback,
+            10
+        )
+
+
 
         # Frequency of calling the function that performs fake velocity
         self.timer = self.create_timer(self.dt, self.send_velocity)
@@ -90,29 +97,24 @@ class JointVelocityController(Node):
 
         self.initialized = bool(valid)
 
+    def joints_velocity_callback(self,msg):
+
+        self.v = np.array(msg.joints_velocity, dtype=np.float32)
+
 
     # loop
     def send_velocity(self):
         
         # We must send trajectory commands if we don't know the initial position of each joint.
-        if self.initialized == True:
-
-            v = np.array([
-                self.get_parameter("v1").value,
-                self.get_parameter("v2").value,
-                self.get_parameter("v3").value,
-                self.get_parameter("v4").value,
-                self.get_parameter("v5").value,
-                self.get_parameter("v6").value,
-            ])
+        if self.initialized == True and self.v is not None :
 
             # This is for safety, if you want you can commented it out.
-            v = np.clip(v, -1.0, 1.0)
+            self.v = np.clip(self.v, -1.0, 1.0)
 
             # Through experiments the best velocity gain I found was 10.0
             velocity_gain = 10.0
 
-            self.q_cmd = self.q_cmd + v * self.dt * velocity_gain
+            self.q_cmd = self.q_cmd + self.v * self.dt * velocity_gain
 
             msg = JointTrajectory()
             msg.joint_names = self.joint_names
@@ -130,14 +132,14 @@ class JointVelocityController(Node):
 
             self.get_logger().info(
                 f"\n"
-                f"CMD v : {np.round(v, 3)}\n"
+                f"CMD v : {np.round(self.v, 3)}\n"
                 f"q_cmd : {np.round(self.q_cmd, 3)}"
             )
 
 
 def main():
     rclpy.init()
-    node = JointVelocityController()
+    node = AutoJointVelocityController()
     rclpy.spin(node)
     rclpy.shutdown()
 

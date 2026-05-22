@@ -97,6 +97,13 @@ Below I will place the plots of each joint, but you can check [here](tests/test_
 
 The positive outcome is that the errors are very small across all joints, and the expected values closely match the actual ones, with a few exceptions that are likely expected. Due to vibrations, the velocity measured from the robot exhibits several significant fluctuations compared to the commanded velocity, which is, however, entirely expected. Additionally, the joints that rotate around the Z-axis are less affected by gravity-related effects, unlike the other joints, since they do not have to lift or lower any load.
 
+**Update:** After conducting more tests, I observed that the gravity factor plays a very significant role in the controller’s behavior, since there is no control over the effort required by a joint to achieve a specific velocity. As a result, the following behaviors were observed:
+
+If a given joint is not heavily affected by gravity, or is only slightly affected by it, the expected velocity and trajectory match the real values almost perfectly. However, if the joint attempts to move in a direction opposite to gravity, the robot performs abrupt and non-smooth motions. In addition, the estimated trajectory and velocity differ significantly from the actual values.
+
+Finally, when the robot moves in the direction of gravity, the motion becomes smoother because gravity assists the movement. However, the resulting velocity becomes greater than the desired one, and therefore both the estimated velocity and the trajectory once again deviate from the real values.
+
+
 ## How to use the controller (via terminal)
 
 - 1: Clone this repo(which plays the role of the workspace)
@@ -126,3 +133,4 @@ ros2 run tests_pkg steady_state_velocity_test \
   -p cmd_velocity:=0.1 \
   -p duration:=5.0
 ```
+

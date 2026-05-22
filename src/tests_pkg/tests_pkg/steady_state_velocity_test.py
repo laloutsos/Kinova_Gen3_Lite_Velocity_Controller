@@ -39,10 +39,19 @@ class SteadyStateVelocityTest(Node):
 
         self.velocity_samples = []
 
-        # NEW: for plotting
+        # raw + filtered data
         self.t_samples = []
         self.q_samples = []
-        self.v_samples = []
+
+        self.v_raw_samples = []
+        self.v_filtered_samples = []
+
+        # ---------------------------------
+        # LOW PASS FILTER PARAMETER (EMA)
+        # ---------------------------------
+        self.alpha = 0.2   # 0.1-0.3 good range (smaller = smoother)
+
+        self.v_filtered = None
 
         # ---------------------------------
         # SUBSCRIBER
@@ -89,7 +98,7 @@ class SteadyStateVelocityTest(Node):
 
             q = float(data["position"])
 
-            # store for plotting
+            # store position
             self.q_samples.append(q)
             self.t_samples.append(current_time)
 
@@ -109,7 +118,7 @@ class SteadyStateVelocityTest(Node):
                 return
 
             # ---------------------------------
-            # VELOCITY ESTIMATION
+            # VELOCITY ESTIMATION (RAW)
             # ---------------------------------
             dt = current_time - self.last_time
 
@@ -117,11 +126,26 @@ class SteadyStateVelocityTest(Node):
                 return
 
             dq = q - self.last_position
-            v_real = dq / dt
+            v_raw = dq / dt
 
-            self.velocity_samples.append(v_real)
-            self.v_samples.append(v_real)
+            # ---------------------------------
+            # LOW PASS FILTER (EMA)
+            # ---------------------------------
+            if self.v_filtered is None:
+                self.v_filtered = v_raw
+            else:
+                self.v_filtered = (
+                    self.alpha * v_raw +
+                    (1.0 - self.alpha) * self.v_filtered
+                )
 
+            # store both
+            self.v_raw_samples.append(v_raw)
+            self.v_filtered_samples.append(self.v_filtered)
+
+            self.velocity_samples.append(self.v_filtered)
+
+            # update state
             self.last_position = q
             self.last_time = current_time
             self.final_position = q
@@ -141,7 +165,9 @@ class SteadyStateVelocityTest(Node):
         q = np.array(self.q_samples)
 
         tv = t[1:]
-        v = np.array(self.v_samples)
+
+        v_raw = np.array(self.v_raw_samples)
+        v_filt = np.array(self.v_filtered_samples)
 
         # ---------------------------------
         # EXPECTED TRAJECTORIES
@@ -152,7 +178,7 @@ class SteadyStateVelocityTest(Node):
         plt.figure()
 
         # -----------------------
-        # POSITION: REAL vs EXPECTED
+        # POSITION
         # -----------------------
         plt.subplot(2, 1, 1)
         plt.plot(t, q, label="real position")
@@ -164,12 +190,13 @@ class SteadyStateVelocityTest(Node):
         plt.legend()
 
         # -----------------------
-        # VELOCITY: REAL vs EXPECTED
+        # VELOCITY
         # -----------------------
         plt.subplot(2, 1, 2)
-        plt.plot(tv, v, label="real velocity")
+        plt.plot(tv, v_raw, alpha=0.4, label="raw velocity")
+        plt.plot(tv, v_filt, label="filtered velocity (EMA)")
         plt.plot(tv, expected_v, '--', label="expected velocity")
-        plt.title("Joint Velocity (Real vs Expected)")
+        plt.title("Joint Velocity (Raw vs Filtered vs Expected)")
         plt.xlabel("time [s]")
         plt.ylabel("rad/s")
         plt.grid(True)
@@ -178,7 +205,9 @@ class SteadyStateVelocityTest(Node):
         plt.tight_layout()
         plt.show()
 
-
+    # ---------------------------------------------------------
+    # MONITOR
+    # ---------------------------------------------------------
     def monitor_test(self):
 
         if self.start_time is None:
