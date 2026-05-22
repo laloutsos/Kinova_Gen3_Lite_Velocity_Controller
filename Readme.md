@@ -103,6 +103,19 @@ If a given joint is not heavily affected by gravity, or is only slightly affecte
 
 Finally, when the robot moves in the direction of gravity, the motion becomes smoother because gravity assists the movement. However, the resulting velocity becomes greater than the desired one, and therefore both the estimated velocity and the trajectory once again deviate from the real values.
 
+Here's a plot for each scenario that confirms my considerations:
+
+### Joint_1 z-axis Rotation
+
+![img](tests/joint1_2nd_test.png)
+
+### Joint_3 being reinforced by gravity
+
+![img](tests/joint_3_to_gravity.png)
+
+### Joint_3 against gravity
+
+![img](tests/joint_3_against_gravity.png)
 
 ## How to use the controller (via terminal)
 
