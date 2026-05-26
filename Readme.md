@@ -117,6 +117,16 @@ Here's a plot for each scenario that confirms my considerations:
 
 ![img](tests/joint_3_against_gravity.png)
 
+Leveraging the fact that the robotic arm provides feedback on the effort experienced by each joint, I parameterized the velocity equation using new gain factors, different for each joint that does not rotate around the Z axis. This allowed me to significantly reduce the error of joint 2 and joint 3 when moving along and against gravity. The updated results are shown below, only for joint 2. When I finish testing joint 3 I will post all results
+
+### Joint 2 against Gravity 
+![img](tests/Joint_2_Against_Gravity.png)
+
+### Joint 2 to Gravity
+![img](tests/joint_2_to_gravity.png)
+
+However, the disturbances and the lack of controlled motion still cause the velocity to exhibit extreme fluctuations in practice. Although with constant velocity the executed trajectory appears to match the predicted one exactly, for accelerated motions the system is still not reliable at all.
+
 ## How to use the controller (via terminal)
 
 - 1: Clone this repo(which plays the role of the workspace)

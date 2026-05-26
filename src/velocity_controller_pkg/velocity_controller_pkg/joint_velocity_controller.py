@@ -27,6 +27,8 @@ class JointVelocityController(Node):
 
         # manipulator state
         self.q_cmd = np.zeros(6)
+        self.efforts = np.zeros(6)
+        
         self.dt = 0.05
         self.initial_q = None
         self.initialized = False 
@@ -65,7 +67,6 @@ class JointVelocityController(Node):
     # Callback: Initial position/angle of each joint
     def initialize_q_cmd(self, msg):
 
-        
         self.initial_q = msg
 
         data_map = {}
@@ -74,18 +75,26 @@ class JointVelocityController(Node):
             interfaces = msg.interface_values[i]
             data = dict(zip(interfaces.interface_names, interfaces.values))
 
-            if "position" in data:
-                data_map[joint_name] = data["position"]
+            data_map[joint_name] = data
 
         self.q_cmd = np.array([
-            data_map.get("arm_0_joint_1", -1000.0),
-            data_map.get("arm_0_joint_2", -1000.0),
-            data_map.get("arm_0_joint_3", -1000.0),
-            data_map.get("arm_0_joint_4", -1000.0),
-            data_map.get("arm_0_joint_5", -1000.0),
-            data_map.get("arm_0_joint_6", -1000.0),
+            data_map.get("arm_0_joint_1", {}).get("position", -1000.0),
+            data_map.get("arm_0_joint_2", {}).get("position", -1000.0),
+            data_map.get("arm_0_joint_3", {}).get("position", -1000.0),
+            data_map.get("arm_0_joint_4", {}).get("position", -1000.0),
+            data_map.get("arm_0_joint_5", {}).get("position", -1000.0),
+            data_map.get("arm_0_joint_6", {}).get("position", -1000.0),
         ])
-        
+
+        self.efforts = np.array([
+            data_map.get("arm_0_joint_1", {}).get("effort", 0.0),
+            data_map.get("arm_0_joint_2", {}).get("effort", 0.0),
+            data_map.get("arm_0_joint_3", {}).get("effort", 0.0),
+            data_map.get("arm_0_joint_4", {}).get("effort", 0.0),
+            data_map.get("arm_0_joint_5", {}).get("effort", 0.0),
+            data_map.get("arm_0_joint_6", {}).get("effort", 0.0),
+        ])
+
         valid = np.all(self.q_cmd != -1000.0)
 
         self.initialized = bool(valid)
@@ -110,9 +119,35 @@ class JointVelocityController(Node):
             v = np.clip(v, -1.0, 1.0)
 
             # Through experiments the best velocity gain I found was 10.0
-            velocity_gain = 10.0
+            velocity_gain = 10 
 
-            self.q_cmd = self.q_cmd + v * self.dt * velocity_gain
+            # self.q_cmd = self.q_cmd + v * self.dt * velocity_gain
+
+            # joint 1
+            self.q_cmd[0] += v[0] * self.dt * velocity_gain 
+
+            # joint 2
+            if self.q_cmd[1] < 0:
+                if v[1]<0: self.q_cmd[1] += v[1] * self.dt * velocity_gain * 0.9
+                else: self.q_cmd[1] += v[1] * self.dt * velocity_gain  * 1.2
+            else: self.q_cmd[1] += v[1] * self.dt * velocity_gain 
+
+            # joint 3
+            if self.q_cmd[2] < 0:
+                self.q_cmd[2] += v[2] * self.dt * velocity_gain * 0.4 
+            else: self.q_cmd[2] += v[2] * self.dt * velocity_gain * -0.6 
+
+            # joint 4
+            self.q_cmd[3] += v[3] * self.dt * velocity_gain 
+
+
+            # joint 5
+            if self.q_cmd[4] < 0:
+                if v[4] > 0: self.q_cmd[4] += v[4] * self.dt * velocity_gain
+            else: self.q_cmd[4] += v[4] * self.dt * velocity_gain 
+            # joint 6
+            self.q_cmd[5] += v[5] * self.dt * velocity_gain 
+
 
             msg = JointTrajectory()
             msg.joint_names = self.joint_names
@@ -120,7 +155,7 @@ class JointVelocityController(Node):
             point = JointTrajectoryPoint()
             point.positions = self.q_cmd.tolist()
 
-             # These are the best values of the parameters for Joint Trajectories I found. 
+            # These are the best values of the parameters for Joint Trajectories I found. 
             point.time_from_start.sec = 0
             point.time_from_start.nanosec = 400000000
 
@@ -131,7 +166,8 @@ class JointVelocityController(Node):
             self.get_logger().info(
                 f"\n"
                 f"CMD v : {np.round(v, 3)}\n"
-                f"q_cmd : {np.round(self.q_cmd, 3)}"
+                f"q_cmd : {np.round(self.q_cmd, 3)}\n"
+                f"effort: {np.round(self.efforts)}"
             )
 
 

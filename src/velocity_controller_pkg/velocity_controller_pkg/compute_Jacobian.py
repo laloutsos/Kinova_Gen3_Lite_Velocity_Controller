@@ -46,7 +46,12 @@ def joint_transforms(DH_params):
     
     transforms = []
     
-    T = sp.eye(4)
+    T = sp.Matrix([
+        [1, 0, 0, 0.12],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0.0],   
+        [0, 0, 0, 1]
+    ])
     transforms.append(T)  # Base frame
     
     for el in DH_params:
@@ -57,14 +62,14 @@ def joint_transforms(DH_params):
     # FIXED TOOL / GRIPPER TRANSFORM
     # ---------------------------------
 
-    T_tool = sp.Matrix([
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0.13],   # example tool offset
-        [0, 0, 0, 1]
-    ])
+    #T_tool = sp.Matrix([
+        #[1, 0, 0, 0.12],
+        #[0, 1, 0, 0],
+        #[0, 0, 1, 0.0],   
+        #[0, 0, 0, 1]
+    #])
     
-    T = T * T_tool
+    # T = T * T_tool
     transforms.append(T)
 
     return transforms
@@ -117,6 +122,35 @@ J_func = jacobian_numeric_func(J_sym)
 
 def compute_jacobian(joints):
     return np.array(J_func(*joints), dtype=float)
+
+# -------------------------------
+# Forward Kinematics
+# -------------------------------
+
+def fk_expr(DH_params):
+
+    transforms = joint_transforms(DH_params)
+
+    T_ee = transforms[-1]
+
+    pos = T_ee[0:3, 3]
+    R = T_ee[0:3, 0:3]
+
+    return pos, R
+
+def fk_numeric_func(pos_sym, R_sym):
+    return sp.lambdify((q1, q2, q3, q4, q5, q6), (pos_sym, R_sym), "numpy")
+
+pos_sym, R_sym = fk_expr(DH_params)
+fk_func = fk_numeric_func(pos_sym, R_sym)
+
+
+def compute_fk(joints):
+
+    pos, R = fk_func(*joints)
+
+    return np.array(pos, dtype=float), np.array(R, dtype=float)
+
 
 # Example usage:
 joints = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
